@@ -3,11 +3,9 @@ from products.models import Category
 
 
 def index(request):
-    categories = Category.objects.all()
     content = {
         'title': 'Home - Main',
         'content': 'Furniture Shop Home',
-        'categories': categories
     }
     return render(request, 'main/index.html', content)
 
