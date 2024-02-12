@@ -31,6 +31,8 @@ class Products(models.Model):
         db_table = 'product'  # значение(имя) таблицы
         verbose_name = 'Продукт'  # название(полей ренейм их)
         verbose_name_plural = 'Продукты'  # (ренейм для множественного числа)
+        ordering: ("id",)
+
 
     def __str__(self):
         return f"{self.name} Количество - {self.quantity}"

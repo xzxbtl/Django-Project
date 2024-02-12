@@ -16,17 +16,22 @@ body {
     transform: scale(1.2);
 }
 
-.nav-item {
+.nav-link.dropdown-toggle.text-white {
     transition: .5s;
 }
-.nav-item:hover{
+.nav-link.dropdown-toggle.text-white:hover{
+    transform: scale(1.2);
+}
+.nav-link.text-white{
+    transition: .5s;
+}
+.nav-link.text-white:hover{
     transform: scale(1.2);
 }
 
 .dropdown-toggle::after {
   content: none;
 }
-
 
 .custom-shadow {
   box-shadow: 5px 5px 25px 19px #000000;

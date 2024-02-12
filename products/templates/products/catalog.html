@@ -1,13 +1,13 @@
 {% extends "main/base.html" %}
 {% load static %}
-
+{% static ' ' %}
 {% block content %}
     <div class="row">
         <!-- Форма фильтров -->
         <div class="dropdown mb-2">
                                 <button class="btn btn-secondary dropdown-toggle btn-dark" type="button" data-bs-toggle="dropdown"
                                     aria-expanded="false">
-                                    Фильтры
+                                    Filter
                                 </button>
 
                                 <form action="" method="get" class="dropdown-menu bg-dark" data-bs-theme="dark">
@@ -54,7 +54,7 @@
                         <a href="{% url 'catalog:product' product.slug %}">
                             <p class="card-title">{{ product.name }}</p>
                         </a>
-                        <p class="card-text text-truncate">{{ product.description }}</p>
+                        <p class="card-text">{{ product.description|truncatechars:35 }}</p>
                         <p class="product_id">id: {{ product.display_id }}</p>
                         <div class="d-flex justify-content-between">
                             {% if product.discount %}
@@ -76,27 +76,30 @@
     </div>
     <!-- Пагинация -->
     <nav aria-label="Page navigation example">
-                            <ul class="pagination justify-content-center my-4">
-                                <div class="custom-shadow d-flex">
-                                    <li class="page-item disabled">
-                                      <a class="page-link">Previous</a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                      <a class="page-link" href="#">Next</a>
-                                    </li>
-                                </div>
-                            </ul>
-                        </nav>
-{% endblock %}
-
-
-{% block footer %}
-    <footer class="py-4 bg-dark">
-        <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; Home Python Hub Studio 2023</p>
-        </div>
-    </footer>
+        <ul class="pagination justify-content-center my-4">
+            <div class="custom-shadow d-flex">
+                <li class="page-item {% if not products.has_previous %} disabled {% endif %}">
+                    <a class="page-link" href="{% if products.has_previous %}
+                    {% url 'catalog:index' slug_url products.previous_page_number %}
+                    {% else %}
+                    #
+                    {% endif %}">Previous</a>
+                </li>
+                {% for page in products.paginator.page_range %}
+                {% if page >= products.number|add:-2 and page <= products.number|add:2 %}
+                    <li class="page-item {% if products.number == page %} active {% endif %}">
+                        <a class="page-link" href="{% url 'catalog:index' slug_url page %}">{{ page }}</a>
+                    </li>
+                {% endif %}
+                {% endfor %}
+                <li class="page-item {% if not products.has_next %} disabled {% endif %}">
+                    <a class="page-link" href="{% if products.has_next %}
+                    {% url 'catalog:index' slug_url products.next_page_number %}
+                    {% else %}
+                    #
+                    {% endif %}">Next</a>
+                </li>
+            </div>
+        </ul>
+    </nav>
 {% endblock %}
