@@ -66,3 +66,11 @@ body {
 .col-lg-10 h1:hover{
     transform: scale(1.2);
 }
+
+.card.border-primary.rounded.custom-shadow {
+    transition: .5s;
+}
+
+.card.border-primary.rounded.custom-shadow:hover {
+    transform: scale(1.05);
+}
